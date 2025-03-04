@@ -1,0 +1,3 @@
+project(mybench)
+
+add_executable(queue main.cpp)

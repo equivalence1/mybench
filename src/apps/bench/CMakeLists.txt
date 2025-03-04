@@ -1,1 +1,2 @@
 add_subdirectory(from_template_project)
+add_subdirectory(prefix_sum)

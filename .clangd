@@ -1,0 +1,8 @@
+Diagnostics:
+  UnusedIncludes: Strict
+  MissingIncludes: Strict
+Index:
+  StandardLibrary: Yes
+CompileFlags:
+  Add: [-Wall, -Wpedantic, -std=c++20, -I/opt/homebrew/include]
+  CompilationDatabase: ./build
