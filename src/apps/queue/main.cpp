@@ -117,12 +117,12 @@ void run_v3() {
 }
 
 int main() {
-    // 22ns
+    // 8ns
     run_v1();
 
-    // 15-16ns
+    // 5ns
     run_v2();
 
-    // 11-12ns
+    // 2ns
     run_v3();
 }

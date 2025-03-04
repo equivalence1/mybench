@@ -2,12 +2,12 @@
 
 #include "queue.h"
 
+#include <new>
 #include <array>
 #include <atomic>
 #include <cstdlib>
 #include <cstdint>
 #include <utility>
-#include <new>
 #include <version>
 
 namespace mybench::queue {
@@ -27,10 +27,10 @@ public:
         }
 
         data_[fst & (MAX_SIZE - 1)] = std::forward<T>(element);
-        first_.fetch_add(1, std::memory_order_release);
+        first_.store(fst + 1, std::memory_order_release);
 
         return true;
-     }
+    }
 
     bool pop(T* data) {
         const auto lst = last_.load(std::memory_order_relaxed);
@@ -39,8 +39,8 @@ public:
             return false;
         }
 
-        *data = std::move(data_[last_ & (MAX_SIZE - 1)]);
-        last_.fetch_add(1, std::memory_order_relaxed);
+        *data = std::move(data_[lst & (MAX_SIZE - 1)]);
+        last_.store(lst + 1, std::memory_order_release);
 
         return true;
     }
@@ -79,7 +79,7 @@ public:
         }
 
         data_[fst & (MAX_SIZE - 1)] = std::forward<T>(element);
-        first_.fetch_add(1, std::memory_order_release);
+        first_.store(fst + 1, std::memory_order_release);
 
         return true;
      }
@@ -91,8 +91,8 @@ public:
             return false;
         }
 
-        *data = std::move(data_[last_ & (MAX_SIZE - 1)]);
-        last_.fetch_add(1, std::memory_order_relaxed);
+        *data = std::move(data_[lst & (MAX_SIZE - 1)]);
+        last_.store(lst + 1, std::memory_order_release);
 
         return true;
     }
@@ -130,7 +130,7 @@ public:
         }
 
         data_[fst & (MAX_SIZE - 1)] = std::forward<T>(element);
-        first_.fetch_add(1, std::memory_order_release);
+        first_.store(fst + 1, std::memory_order_release);
 
         return true;
      }
@@ -144,8 +144,8 @@ public:
             }
         }
 
-        *data = std::move(data_[last_ & (MAX_SIZE - 1)]);
-        last_.fetch_add(1, std::memory_order_relaxed);
+        *data = std::move(data_[lst & (MAX_SIZE - 1)]);
+        last_.store(lst + 1, std::memory_order_release);
 
         return true;
     }
